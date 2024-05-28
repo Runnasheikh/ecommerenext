@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import { useRef } from 'react'
@@ -9,8 +9,10 @@ import {MdAccountCircle} from "react-icons/md"
 
 import Link from 'next/link'
 import CartContext from '@/context/cartContext'
+import { useRouter } from 'next/router'
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(false)
+  const [sidebar, setsidebar] = useState(false)
   const toggleDropdown = ()=>{
     setDropdown(!dropdown)
   }
@@ -19,18 +21,29 @@ const Navbar = () => {
 
   const ref  = useRef()
   const toggleCart = ()=>{
-    if(ref.current.classList.contains('translate-x-full')){
-      ref.current.classList.remove('translate-x-full')
-      ref.current.classList.add('translate-x-0')
-    }else if(!ref.current.classList.contains('translate-x-full')){
-      ref.current.classList.remove('translate-x-0')
-      ref.current.classList.add('translate-x-full')
+    // if(ref.current.classList.contains('translate-x-full')){
+    //   ref.current.classList.remove('translate-x-full')
+    //   ref.current.classList.add('translate-x-0')
+    // }else if(!ref.current.classList.contains('translate-x-full')){
+    //   ref.current.classList.remove('translate-x-0')
+    //   ref.current.classList.add('translate-x-full')
 
-    }
-    console.log("your ref"+ref)
+    // }
+    // console.log("your ref"+ref)
+    setsidebar(!sidebar)
   }
+  const router = useRouter()
+
+  useEffect(()=>{
+    Object.keys(cart).length !==0 && setsidebar(true)
+    console.log(router)
+    let exempted = ['/checkout','/order','/orders']
+    if(exempted.includes(router.pathname)){
+      setsidebar(false)
+    }
+  },[])
   return (
-    <div className="flex flex-col md:flex-row md:justify-start justify-center items-center py-2 shadow-md sticky z-10">
+    <div className={`flex flex-col md:flex-row md:justify-start justify-center items-center py-2 shadow-md sticky z-10 `}>
     <div className="logo mx-5 sticky">
       <Image width={200} height={20} src="/logo.png" alt="" />
     </div>
@@ -61,7 +74,7 @@ const Navbar = () => {
      <AiOutlineShoppingCart onClick={toggleCart} className="text-xl md:text-2xl"/>
     </div>
     
-    <div ref={ref} className="w-72 h-[100vh] sideCart absolute top-0 right-0 bg-pink-100 p-10 transform transition-transform translate-x-full"> 
+    <div ref={ref} className={`w-72 h-[100vh] sideCart absolute top-0 overflow-x-scroll  bg-pink-100 p-10  transition-all ${sidebar?'right-0':'-right-96'} `} > 
     {/* ${Object.keys(cart).length !==0 ? 'translate-x-0':'translate-x-full'}`} */}
 
       <h3 className="font-bold text-xl">Shopping Cart</h3>

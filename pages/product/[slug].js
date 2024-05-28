@@ -65,14 +65,16 @@ const Slug = ({ product, variants }) => {
     setPin(e.target.value);
   };
 
-  useEffect(() => {
-   
-  }, [product, variants]);
   const [color, setColor] = useState(product.color)
   const [size, setSize] = useState(product.size)
+  useEffect(() => {
+   setColor(product.color)
+   setSize(product.size)
+  }, [router.query]);
   const refreshVariant = (newsize,newcolor)=>{
   let url = `${process.env.NEXT_PUBLIC_HOST}/product/${variants[newcolor][newsize]['slug']}`
-  window.location = url; 
+  // window.location = url; 
+  router.push(url)
   
   }
   
