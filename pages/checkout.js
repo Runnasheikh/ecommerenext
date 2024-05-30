@@ -23,7 +23,7 @@ const Checkout = () => {
   useEffect(() => {
 
     const user = JSON.parse(localStorage.getItem('myUser'))
-    if(user.token){
+    if(user && user.token){
      setuser(user)
      setEmail(user.email)
     }
@@ -105,7 +105,8 @@ const Checkout = () => {
       address,
        cart,
        clearCart,
-       phone
+       phone,
+       pincode
     };
   
     try {
@@ -178,7 +179,17 @@ if (res.orders.length > 0) {
   router.push(`/orders?id=${res.orders[res.orders.length - 1]._id}`);
 }
     
-  
+await fetch('http://localhost:3000/api/sendemail', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    email,
+    amount: subtotal,
+    orderId: data.id,
+  }),
+});
             
           } else {
             alert("Payment verification failed: " + verificationData.message);

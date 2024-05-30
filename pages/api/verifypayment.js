@@ -16,8 +16,9 @@ const handler = async (req, res) => {
       // Payment is verified
      let or =  await orderm.findOneAndUpdate({ orderId: orderId }, { status: "paid",paymentInfo:JSON.stringify(req.body) });
       let products = or.products;
-
+   
       for (let slug in products) {
+        
         await Product.findOneAndUpdate({ slug: slug }, { $inc: { "availableQty": - products[slug].qty } });
       }
 
@@ -31,5 +32,6 @@ const handler = async (req, res) => {
     res.status(405).json({ message: "Method not allowed" });
   }
 };
+
 
 export default connectDb(handler);

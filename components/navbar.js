@@ -36,7 +36,7 @@ const Navbar = () => {
 
   useEffect(()=>{
     Object.keys(cart).length !==0 && setsidebar(true)
-    console.log(router)
+  
     let exempted = ['/checkout','/order','/orders']
     if(exempted.includes(router.pathname)){
       setsidebar(false)

@@ -8,7 +8,7 @@ import React from 'react'
 const Orders = ({order}) => {
   const router = useRouter()
   const products = order.products
-  // console.log(order.products)
+  
  
   return (
     <div>
@@ -18,6 +18,7 @@ const Orders = ({order}) => {
       <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
         <h2 class="text-sm title-font text-gray-500 tracking-widest">wearcode.com</h2>
         <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">ORDERid - {order.orderId}</h1>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">email - {order.email}</h1>
         <p class="leading-relaxed mb-4">your orders has been placed {order.status}</p>
         <div class="flex mb-4">
           <a class="flex-grow text-center  py-2 text-lg px-1">item description</a>

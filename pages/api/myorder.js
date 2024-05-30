@@ -8,10 +8,7 @@ const data =  jsonwebtoken.verify(token,process.env.JWT_SECRET)
 console.log(data)
 const orders = await orderm.find({email: data.email})
 res.status(200).json({orders})
-// orders.forEach(order => {
-//     console.log(order._id);
-//   });
+console.log("hello wordld")
 
-// console.log(Object.keys.orders._id)
 }
 export default connectDb(handler);
