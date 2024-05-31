@@ -1,0 +1,44 @@
+/* Order.module.css */
+.tableContainer {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #333;
+    padding: 0.5rem;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #333;
+  }
+  
+  .table td {
+    background-color: #2a2a2a;
+  }
+  
+  .table a {
+    color: #1e90ff;
+  }
+  
+  .table button {
+    background-color: #ff4500;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .table button:hover {
+    background-color: #ff6347;
+  }
+  

@@ -75,7 +75,7 @@ const Checkout = () => {
   const initializeRazorpay = () => {
     return new Promise((resolve) => {
       const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.src ="https://checkout.razorpay.com/v1/checkout.js";
 
       script.onload = () => {
         resolve(true);
@@ -151,8 +151,8 @@ const Checkout = () => {
               razorpayOrderId: response.razorpay_order_id,
               razorpaySignature: response.razorpay_signature,
             }),
+           
           });
-          
         
           const verificationData = await verificationResponse.json();
   
@@ -171,7 +171,7 @@ const Checkout = () => {
     });
     const res = await  a.json()
     setorders(res.orders)
-    console.log(res);
+;
    // Log the _id of the first order
 if (res.orders.length > 0) {
   

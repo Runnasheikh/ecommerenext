@@ -8,7 +8,7 @@ import React from 'react'
 const Orders = ({order}) => {
   const router = useRouter()
   const products = order.products
-  
+  // console.log(order)
  
   return (
     <div>

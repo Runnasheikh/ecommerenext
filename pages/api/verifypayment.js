@@ -14,7 +14,7 @@ const handler = async (req, res) => {
 
     if (digest === razorpaySignature) {
       // Payment is verified
-     let or =  await orderm.findOneAndUpdate({ orderId: orderId }, { status: "paid",paymentInfo:JSON.stringify(req.body) });
+     let or =  await orderm.findOneAndUpdate({ orderId: orderId }, { status: "paid",paymentInfo:JSON.stringify({razorpayOrderId,razorpayPaymentId,razorpaySignature})});
       let products = or.products;
    
       for (let slug in products) {
