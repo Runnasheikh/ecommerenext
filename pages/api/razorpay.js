@@ -80,7 +80,11 @@ const handler = async (req, res) => {
         orderId: response.id,
         paymentInfo: "",
         products: cart,
-        address: address,
+        address: req.body.address,
+        city: req.body.city,
+        phone: req.body.phone,
+        name: req.body.name,
+        state: req.body.state,
         amount: amount,
         status: "pending", // Initial status
       });

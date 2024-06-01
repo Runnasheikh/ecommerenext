@@ -121,7 +121,21 @@ const Order = () => {
             o.orderId === order.orderId ? { ...o, status: "cancelled" } : o
           )
         );
+        await fetch('http://localhost:3000/api/sendemail', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    email,
+    amount: subtotal,
+    orderId: data.id,
+  }),
+});
+       
       }
+          
+  
     } catch (error) {
       console.error("Refund initiation failed", error);
     }

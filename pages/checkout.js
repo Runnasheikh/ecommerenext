@@ -22,15 +22,45 @@ const Checkout = () => {
   const [myuser, setuser] = useState({value:null})
   useEffect(() => {
 
-    const user = JSON.parse(localStorage.getItem('myUser'))
-    if(user && user.token){
-     setuser(user)
-     setEmail(user.email)
+    const userr = JSON.parse(localStorage.getItem('myUser'))
+    if(userr && userr.token){
+     setuser(userr)
+     setEmail(userr.email)
+     fetchuser(userr.token)
     }
-   
     
   }, []);
-  
+  const getpincode = async(pin)=>{
+    let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pin`);
+    let pinjson = await pins.json()
+    if(Object.keys(pinjson).includes(pin)){
+      setState(pinjson[pin][1])
+      setCity(pinjson[pin][0])
+    }else{
+      setState('')
+      setCity('')
+    }
+  }
+  const fetchuser = async (token) => {
+    let data = { token: token };
+    console.log(data);
+    let a = await fetch('http://localhost:3000/api/getuser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    let res = await a.json();
+    console.log(res);
+    
+      setname(res.name);
+      setPhone(res.phone);
+      setAddres(res.address);
+      setPincode(res.pincode);
+      getpincode(res.pincode)
+    
+  };
   const handleChange =async(e)=>{
    
   if(e.target.name == 'name'){
@@ -51,15 +81,7 @@ const Checkout = () => {
   else if(e.target.name == 'pincode'){
     setPincode(e.target.value)
     if(e.target.value.length == 6){
-      let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pin`);
-      let pinjson = await pins.json()
-      if(Object.keys(pinjson).includes(e.target.value)){
-        setState(pinjson[e.target.value][1])
-        setCity(pinjson[e.target.value][0])
-      }else{
-        setState('')
-        setCity('')
-      }
+      getpincode(e.target.value)
     }
   }
   if(name.length>3 && phone.length>3 && address.length>3 && pincode.length>3){
@@ -171,7 +193,6 @@ const Checkout = () => {
     });
     const res = await  a.json()
     setorders(res.orders)
-;
    // Log the _id of the first order
 if (res.orders.length > 0) {
   
