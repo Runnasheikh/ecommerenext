@@ -2,6 +2,7 @@ import connectDb from "@/middleware/mongoose"
 import Product from "@/public/models/product"
 
 
+
   const handler =  async  (req,res)=>{
     if(req.method == 'POST'){
         console.log(req.body)

@@ -1,4 +1,4 @@
-"use client"
+
 import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 
@@ -45,10 +45,10 @@ const Navbar = () => {
   return (
     <div className={`flex flex-col md:flex-row md:justify-start justify-center items-center py-2 shadow-md sticky z-10 `}>
     <div className="logo mx-5 sticky">
-      <Image width={150} height={150} src="/bwhite.png" alt="" />
+      <Link href={'/'}><Image width={150} height={150} src="/bwhite.png" alt="" /></Link>
     </div>
-    <div className="nav">
-      <ul className="flex items-center space-x-4 font-bold md:text-xl">
+    <div className="nav flex justify-center">
+      <ul className="flex items-center  space-x-4 font-bold md:text-xl">
         <Link href={"/tshirt"}><li>Tshirts</li></Link>
         <Link href={"/hoddie"}><li>Hoodies</li>
         </Link>
