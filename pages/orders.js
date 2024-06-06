@@ -1,4 +1,4 @@
-import orderm from '@/pages/api/orderm'
+import orderm from '@/public/models/orderm'
 import mongoose from 'mongoose'
 import { useRouter } from 'next/router'
 
