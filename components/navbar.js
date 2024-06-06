@@ -12,9 +12,7 @@ import 'react-modern-drawer/dist/index.css';
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const toggleDropdown = () => {
-    setDropdown(!dropdown);
-  };
+ 
   const { cart, removeFromCart, addToCart, clearCart, subtotal, buyNow, key, user, logout } = useContext(CartContext);
   const router = useRouter();
 
