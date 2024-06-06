@@ -7,7 +7,7 @@ import { useContext } from "react";
 import Product from "@/public/models/product";
 
 const Razorpay = require("razorpay");
-const shortid = require("shortid");
+
 
 const handler = async (req, res) => {
 
