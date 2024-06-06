@@ -1,5 +1,6 @@
-import connectDb from "@/pages/api/middleware/mongoose"
-import orderm from "@/pages/api/orderm"
+import connectDb from "@/middleware/mongoose";
+import orderm from "@/public/models/orderm";
+
 import jsonwebtoken from "jsonwebtoken"
 
 const handler = async (req, res) => {

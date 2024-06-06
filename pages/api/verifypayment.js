@@ -1,6 +1,8 @@
-import orderm from "@/pages/api/orderm";
-import connectDb from "@/pages/api/middleware/mongoose";
-import Product from "@/pages/api/product";
+import connectDb from "@/middleware/mongoose";
+import orderm from "@/public/models/orderm";
+
+
+import Product from "@/public/models/product";
 const crypto = require('crypto');
 
 const handler = async (req, res) => {

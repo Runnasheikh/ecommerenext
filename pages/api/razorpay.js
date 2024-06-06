@@ -1,12 +1,13 @@
 import CartContext from "@/context/cartContext";
-import connectDb from "@/pages/api/middleware/mongoose";
-import Order from "@/pages/api/orderm";
-import Product from "@/pages/api/product";
+import connectDb from "@/middleware/mongoose";
+import Order from "@/public/models/orderm";
+
 import pincodes from '../../pincodes.json'
 import { useContext } from "react";
+import Product from "@/public/models/product";
 
 const Razorpay = require("razorpay");
-
+const shortid = require("shortid");
 
 const handler = async (req, res) => {
 
