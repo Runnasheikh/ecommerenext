@@ -1,5 +1,6 @@
-import connectDb from "@/pages/api/middleware/mongoose"
-import User from "@/public/models/User"
+import connectDb from '@/middleware/mongoose'
+import User from '@/public/models/User'
+
 var cryptoJS = require('crypto-js')
 
 
