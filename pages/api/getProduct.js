@@ -28,8 +28,8 @@
 // };
 
 // export default connectDb(handler);
-import connectDb from "@/pages/api/middleware/mongoose";
-import Product from "@/pages/api/models/product";
+import connectDb from "@/pages/api/mongoose";
+import Product from "@/pages/api/product";
 
 const handler = async (req, res) => {
     let products = await Product.find();

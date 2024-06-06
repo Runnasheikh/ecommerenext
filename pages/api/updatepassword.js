@@ -1,4 +1,4 @@
-import connectDb from '@/pages/api/middleware/mongoose';
+import connectDb from '@/pages/api/mongoose';
 import User from '@/pages/api/models/User';
 import cryptoJs from 'crypto-js';
 import jsonwebtoken from 'jsonwebtoken'

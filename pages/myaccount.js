@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { useState } from "react";
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import orderm from '@/pages/api/models/orderm';
+import orderm from '@/pages/api/orderm';
 
 const Myaccount = () => {
   const [name, setname] = useState('')

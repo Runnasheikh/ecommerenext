@@ -1,7 +1,7 @@
 "use client"
 
 import CartContext from "@/context/cartContext";
-import Product from "@/pages/api/models/product";
+import Product from "@/pages/api/product";
 import mongoose from "mongoose";
 import { useRouter } from "next/router";
 import { useContext, useState, useEffect } from "react";
