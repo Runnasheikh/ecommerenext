@@ -1,6 +1,6 @@
-import connectDb from "@/middleware/mongoose";
-import orderm from "@/public/models/orderm";
-import Product from "@/public/models/product";
+import connectDb from "@/pages/api/middleware/mongoose";
+import orderm from "@/pages/api/models/orderm";
+import Product from "@/pages/api/models/product";
 import Razorpay from "razorpay";
 
 const razorpay = new Razorpay({

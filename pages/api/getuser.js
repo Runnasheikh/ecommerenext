@@ -1,6 +1,6 @@
 
-import connectDb from "@/middleware/mongoose";
-import User from "@/public/models/User";
+import connectDb from "@/pages/api/middleware/mongoose";
+import User from "@/pages/api/models/User";
 import jsonwebtoken from 'jsonwebtoken'
 
 const handler = async (req, res) => {

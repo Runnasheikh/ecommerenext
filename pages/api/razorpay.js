@@ -1,7 +1,7 @@
 import CartContext from "@/context/cartContext";
-import connectDb from "@/middleware/mongoose";
-import Order from "@/public/models/orderm";
-import Product from "@/public/models/product";
+import connectDb from "@/pages/api/middleware/mongoose";
+import Order from "@/pages/api/models/orderm";
+import Product from "@/pages/api/models/product";
 import pincodes from '../../pincodes.json'
 import { useContext } from "react";
 
