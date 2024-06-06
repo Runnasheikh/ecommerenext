@@ -4,32 +4,50 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import CartContext from "@/context/cartContext";
 import styles from '../styles/order.module.css';
+import QRCode from "qrcode";
+import Image from "next/image";
 
 const Order = () => {
   const { clearCart } = useContext(CartContext);
   const [orders, setOrders] = useState([]);
   const [lastRazorpayPaymentId, setLastRazorpayPaymentId] = useState('');
+  const [qrCodes, setQrCodes] = useState({});
   const router = useRouter();
+
+  const generateQrCode = async (data, orderId) => {
+    try {
+      const url = await QRCode.toDataURL(data, { errorCorrectionLevel: "H" });
+      setQrCodes((prevQrCodes) => ({ ...prevQrCodes, [orderId]: url }));
+    } catch (error) {
+      console.error("QR code generation failed", error);
+    }
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/myorder`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token: JSON.parse(localStorage.getItem('myUser')).token }),
-      });
-      const result = await response.json();
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/myorder`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token: JSON.parse(localStorage.getItem('myUser')).token }),
+        });
+        const result = await response.json();
+        
+        setOrders(result.orders);
+        if (result.orders.length > 0) {
+          const lastOrder = result.orders[result.orders.length - 1];
+          const paymentInfo = JSON.parse(lastOrder.paymentInfo);
+          setLastRazorpayPaymentId(paymentInfo.razorpayPaymentId);
+          console.log(paymentInfo.razorpayPaymentId);
+        }
       
-      setOrders(result.orders);
-
-      // Extract and store the razorpayPaymentId of the last order
-      if (result.orders.length > 0) {
-        const lastOrder = result.orders[result.orders.length - 1];
-        const paymentInfo = JSON.parse(lastOrder.paymentInfo);
-        setLastRazorpayPaymentId(paymentInfo.razorpayPaymentId);
-        console.log(paymentInfo.razorpayPaymentId);
+        result.orders.forEach((order) => {
+          generateQrCode(JSON.stringify(order), order.orderId);
+        });
+      } catch (error) {
+        console.error("Error fetching orders:", error);
       }
     };
 
@@ -38,15 +56,14 @@ const Order = () => {
     } else {
       fetchOrders();
     }
-
+  
     if (router.query.clearCart == 1) {
       clearCart();
     }
   }, [clearCart, router]);
-
+  
   const handlePayAgain = async (order) => {
     try {
-
       const response = await fetch('/api/razorpay', {
         method: 'POST',
         headers: {
@@ -101,14 +118,13 @@ const Order = () => {
 
   const handleCancelOrder = async (order) => {
     try {
-     
       const response = await fetch('/api/refund', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          razorpayPaymentId: lastRazorpayPaymentId,  // dynamically get the payment ID
+          razorpayPaymentId: lastRazorpayPaymentId,
           amount: order.amount,
           orderId: order.orderId
         }),
@@ -122,20 +138,17 @@ const Order = () => {
           )
         );
         await fetch('http://localhost:3000/api/sendemail', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    email,
-    amount: subtotal,
-    orderId: data.id,
-  }),
-});
-       
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: order.email,
+            amount: order.amount,
+            orderId: order.orderId,
+          }),
+        });
       }
-          
-  
     } catch (error) {
       console.error("Refund initiation failed", error);
     }
@@ -152,13 +165,14 @@ const Order = () => {
           <TableColumn>Details</TableColumn>
           <TableColumn>Action</TableColumn>
           <TableColumn>Cancel Order</TableColumn>
+          <TableColumn>QR Code</TableColumn>
         </TableHeader>
         <TableBody>
           {orders.map((item) => (
             <TableRow key={item._id}>
               <TableCell>{item.orderId}</TableCell>
               <TableCell>{item.email}</TableCell>
-              <TableCell>{item.address}</TableCell>
+              <TableCell>{item.amount}</TableCell>
               <TableCell>{item.status}</TableCell>
               <TableCell>
                 <Link href={`/orders?id=${item._id}`}>Details</Link>
@@ -171,6 +185,13 @@ const Order = () => {
               <TableCell>
                 {item.status !== 'cancelled' && (
                   <button onClick={() => handleCancelOrder(item)}>Cancel Order</button>
+                )}
+              </TableCell>
+              <TableCell>
+                {item.status !== 'cancelled' && qrCodes[item.orderId] ? (
+                  <Image src={qrCodes[item.orderId]} alt={`QR Code for Order ${item.orderId}`} width={200} height={200} />
+                ) : (
+                  <p>{item.status === 'cancelled' ? "Order Cancelled" : "Loading QR Code..."}</p>
                 )}
               </TableCell>
             </TableRow>
