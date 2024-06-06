@@ -41,7 +41,7 @@ export const CartProvider = ({ children }) => {
       setUser({value:myUser.token,email: myUser.email})
     }
     setKey(Math.random())
-  }, []);
+  }, [router]);
 const logout = ()=>{
   localStorage.removeItem('myUser')
   setUser({value:null})
