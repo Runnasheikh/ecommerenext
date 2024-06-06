@@ -55,7 +55,7 @@ const Orders = ({order}) => {
 
 export async function getServerSideProps(context) {
   if (!mongoose.connections[0].readyState) {
-    await mongoose.connect("mongodb://localhost:27017/wearthecode");
+    await mongoose.connect(process.env.NEXT_PUBLIC_MONGODB);
   }
 
   const order = await orderm.findById(context.query.id);

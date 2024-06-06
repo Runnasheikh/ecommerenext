@@ -6,7 +6,7 @@ const connectDb = handler => async (req, res) => {
     }
     
     try {
-        await mongoose.connect('mongodb://localhost:27017/wearthecode', {
+        await mongoose.connect(process.env.NEXT_PUBLIC_MONGODB, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         }).then(()=>{
