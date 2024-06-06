@@ -108,7 +108,7 @@ const Checkout = () => {
       alert("Razorpay SDK Failed to load");
       return;
     }
-
+  
     const orderDetails = {
       amount: subtotal,
       email,
@@ -118,7 +118,7 @@ const Checkout = () => {
       phone,
       pincode,
     };
-
+  
     try {
       const response = await fetch("/api/razorpay", {
         method: "POST",
@@ -127,15 +127,17 @@ const Checkout = () => {
         },
         body: JSON.stringify(orderDetails),
       });
-
+  
       if (!response.ok) {
         const errorData = await response.text();
         console.error('Error response from server:', errorData);
         alert('Error creating order: ' + errorData);
         return;
       }
-
-      const data = await response.json();
+  
+      const data = await response.json(); // Read the response body here
+      console.log(data);
+  
       const options = {
         key: "rzp_test_iZrG14NDYMdlpz",
         name: "Manu Arora Pvt Ltd",
@@ -159,9 +161,9 @@ const Checkout = () => {
               razorpaySignature: response.razorpay_signature,
             }),
           });
-
+  
           const verificationData = await verificationResponse.json();
-
+  
           if (verificationData.status === "success") {
             const a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/myorder`, {
               method: "POST",
@@ -176,7 +178,7 @@ const Checkout = () => {
               clearCart();
               router.push(`/orders?id=${res.orders[res.orders.length - 1]._id}`);
             }
-
+  
             await fetch('http://localhost:3000/api/sendemail', {
               method: 'POST',
               headers: {
@@ -188,7 +190,7 @@ const Checkout = () => {
                 orderId: data.id,
               }),
             });
-
+  
           } else {
             alert("Payment verification failed: " + verificationData.message);
             toast.error('Payment verification failed', {
@@ -209,7 +211,7 @@ const Checkout = () => {
           contact: phone,
         },
       };
-
+  
       const paymentObject = new window.Razorpay(options);
       paymentObject.open();
     } catch (error) {
@@ -217,6 +219,7 @@ const Checkout = () => {
       alert('Error making payment: ' + error.message);
     }
   };
+  
 
   return (
     <div className='container sm:m-auto px-2'>

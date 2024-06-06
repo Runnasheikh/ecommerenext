@@ -66,7 +66,7 @@ const handler = async (req, res) => {
       const options = {
         amount: amount * 100, // Amount in paise
         currency,
-        receipt: shortid.generate(),
+       
         payment_capture,
       };
 
