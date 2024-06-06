@@ -1,5 +1,5 @@
 import orderm from "@/pages/api/orderm";
-import connectDb from "@/pages/api/mongoose";
+import connectDb from "@/pages/api/middleware/mongoose";
 import Product from "@/pages/api/product";
 const crypto = require('crypto');
 

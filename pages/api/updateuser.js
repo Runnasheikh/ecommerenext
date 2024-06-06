@@ -1,5 +1,5 @@
-import User from '@/pages/api/models/User';
-import connectDb from './mongoose';
+import User from '@/public/models/User';
+import connectDb from './middleware/mongoose';
 import jwt from 'jsonwebtoken';
 
 const handler = async (req, res) => {

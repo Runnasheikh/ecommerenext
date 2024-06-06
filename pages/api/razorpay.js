@@ -1,5 +1,5 @@
 import CartContext from "@/context/cartContext";
-import connectDb from "@/pages/api/mongoose";
+import connectDb from "@/pages/api/middleware/mongoose";
 import Order from "@/pages/api/orderm";
 import Product from "@/pages/api/product";
 import pincodes from '../../pincodes.json'
