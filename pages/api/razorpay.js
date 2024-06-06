@@ -6,7 +6,7 @@ import pincodes from '../../pincodes.json'
 import { useContext } from "react";
 
 const Razorpay = require("razorpay");
-const shortid = require("shortid");
+
 
 const handler = async (req, res) => {
 
